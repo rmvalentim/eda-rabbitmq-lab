@@ -25,6 +25,8 @@ services:
 
   consumer:
     build: ./consumer
+    environment: 
+      RABBIT_URL: amqp://rabbitmq
     depends_on:
       - rabbitmq
     networks:
