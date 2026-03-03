@@ -1,1 +1,22 @@
 # Event-Driven Architecture with RabbitMQ Lab
+version: '3.8'
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-managent
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  
+  publisher:
+    build: ./publisher
+    ports:
+      - "3000:3000"
+    depends_on:
+      - rabbitmq
+
+  consumer:
+    build: ./consumer
+    depends_on:
+      - rabbitmq
