@@ -8,15 +8,28 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - network
   
   publisher:
     build: ./publisher
     ports:
       - "3000:3000"
+    environment:
+      APP_PORT: 3000
+      RABBIT_URL: amqp://rabbitmq
     depends_on:
       - rabbitmq
+    networks:
+      - network
 
   consumer:
     build: ./consumer
     depends_on:
       - rabbitmq
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
